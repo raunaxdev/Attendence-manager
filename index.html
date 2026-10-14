@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIITM Attendance & Management System</title>
+    
+    <!-- Favicon Placeholder -->
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <meta name="description" content="Official Attendance and Student Management System for CIITM Dhanbad.">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Toast Notification System -->
+    <div id="toastContainer"></div>
+
+    <!-- LOGIN PAGE -->
+    <div id="loginPage">
+        <div class="login-box">
+            <img src="logo.jpg" alt="CIITM Logo" class="clickable-logo" onclick="location.reload()">
+            <h2>CIITM Admin Login</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+            <p id="loginError"></p>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app">
+        <!-- MOBILE NAVBAR -->
+        <div class="mobile-navbar">
+            <button id="menuToggle" onclick="toggleSidebar()">☰ Menu</button>
+            <span class="mobile-title">CIITM Portal</span>
+            <button onclick="toggleDarkMode()" class="btn-sm">🌙</button>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="sidebar" id="sidebar">
+            <div class="college-brand">
+                <img src="logo.jpg" class="college-logo clickable-logo" alt="Logo" onclick="showSection('dashboard')">
+                <h3>CIITM</h3>
+                <p class="college-sub">Attendance System</p>
+            </div>
+
+            <button onclick="showSection('dashboard')">Dashboard</button>
+            <button onclick="showSection('students')">Students</button>
+            <button onclick="showSection('subjects')">Subjects</button>
+            <button onclick="showSection('attendance')">Attendance</button>
+            <button onclick="showSection('timetable')">Time Table</button>
+            <button onclick="showSection('report')">Reports</button>
+            <button onclick="toggleDarkMode()">🌓 Toggle Dark Mode</button>
+            <button onclick="logout()" class="btn-danger">Logout</button>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- DASHBOARD -->
+            <div id="dashboard" class="section">
+                <div class="college-header">
+                    <img src="logo.jpg" class="header-logo clickable-logo" alt="Logo" onclick="showSection('dashboard')">
+                    <div>
+                        <h1>Chhotanagpur Institute of Information Technology and Management</h1>
+                        <p>Hari Mandir Road, Hirapur, Dhanbad - 826001</p>
+                        <p>Director: Mr. Pramod Kumar Jha</p>
+                    </div>
+                </div>
+
+                <h2>Dashboard</h2>
+
+                <div class="cards">
+                    <div class="card">
+                        <h3>Total Students</h3>
+                        <p id="totalStudents">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Subjects</h3>
+                        <p id="totalSubjects">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Attendance Records</h3>
+                        <p id="totalAttendance">0</p>
+                    </div>
+                </div>
+
+                <div class="college-info">
+                    <h3>College Information</h3>
+                    <p><b>Institute:</b> Chhotanagpur Institute of Information Technology and Management</p>
+                    <p><b>Estd:</b> 1999</p>
+                    <p><b>Affiliated to:</b> Makhanlal Chaturvedi National University of Journalism and Communication, Bhopal</p>
+                    <p><b>Approved by:</b> AICTE</p>
+                    <p><b>Programmes:</b> UG / PG / Diploma</p>
+                    <p><b>Director:</b> Mr. Pramod Kumar Jha</p>
+                    <p><b>Contact:</b> 
+                        <a href="tel:+919905186177" class="contact-link">+91-9905186177</a> , 
+                        <a href="tel:+919431914887" class="contact-link">+91-9431914887</a>
+                    </p>
+                    <p><b>Email:</b> <a href="mailto:info@ciitm.ac.in" class="contact-link">info@ciitm.ac.in</a></p>
+                </div>
+            </div>
+
+            <!-- STUDENTS -->
+            <div id="students" class="section hidden">
+                <h1>Add Student</h1>
+                <input type="text" id="studentName" placeholder="Student Name">
+                <button onclick="addStudent()">Add Student</button>
+
+                <h2>Student List</h2>
+                <input type="text" id="searchStudent" placeholder="Search student..." onkeyup="searchStudent()">
+
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- SUBJECTS -->
+            <div id="subjects" class="section hidden">
+                <h1>Add Subject</h1>
+                <input type="text" id="subjectName" placeholder="Subject Name">
+                <input type="text" id="teacherName" placeholder="Teacher Name">
+                <button onclick="addSubject()">Add Subject</button>
+
+                <h2>Subject List</h2>
+                <table id="subjectTable">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Teacher</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- ATTENDANCE -->
+            <div id="attendance" class="section hidden">
+                <h1>Take Attendance</h1>
+                <div class="attendance-controls">
+                    <input type="date" id="attendanceDate">
+                    <select id="subjectSelect"></select>
+                    <button onclick="markAttendance()">Fetch Students</button>
+                </div>
+                <div id="attendanceSection"></div>
+            </div>
+
+            <!-- TIME TABLE -->
+            <div id="timetable" class="section hidden">
+                <h1>Time Table</h1>
+                <select id="daySelect">
+                    <option value="">Select Day</option>
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                </select>
+                <input type="text" id="ttSubject" placeholder="Subject">
+                <input type="text" id="ttTeacher" placeholder="Teacher">
+                <input type="time" id="ttTime">
+                <button onclick="addTimetable()">Add Slot</button>
+
+                <table id="ttTable">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Subject</th>
+                            <th>Teacher</th>
+                            <th>Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- REPORTS -->
+            <div id="report" class="section hidden">
+                <h1>Student Attendance Report</h1>
+                <select id="studentReportSelect"></select>
+                <button onclick="viewStudentReport()">View Report</button>
+                <button onclick="copyReportToClipboard()">📋 Copy Report</button>
+                <div id="studentReportResult"></div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="app-footer">
+                <p>&copy; <span id="copyYear"></span> CIITM. All Rights Reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()">▲</button>
+
+    <!-- FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC0u1JShyaEPPIsTpcvuwfvZ8AyYeW1-6Q",
+            authDomain: "college-attendance-syste-2451f.firebaseapp.com",
+            projectId: "college-attendance-syste-2451f",
+            storageBucket: "college-attendance-syste-2451f.firebasestorage.app",
+            messagingSenderId: "494557597879",
+            appId: "1:494557597879:web:b5686c978001dd65ea7d32"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
