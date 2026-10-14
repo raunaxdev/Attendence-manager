@@ -14,6 +14,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Embedded Logo & Layout Fit Assurance */
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .login-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .login-box .login-logo {
+            max-width: 160px !important;
+            width: 100% !important;
+            height: auto !important;
+            margin: 0 auto 15px auto !important;
+            display: block !important;
+            object-fit: contain !important;
+        }
+
+        .college-brand .college-logo {
+            max-width: 120px !important;
+            height: auto !important;
+            margin: 0 auto 8px auto !important;
+            display: block !important;
+        }
+
+        .college-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .college-header .header-logo {
+            max-width: 65px !important;
+            height: auto !important;
+            flex-shrink: 0;
+        }
+
+        .clickable-logo {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .clickable-logo:hover {
+            transform: scale(1.03);
+        }
+    </style>
 </head>
 <body>
 
@@ -26,12 +80,16 @@
     <!-- LOGIN PAGE -->
     <div id="loginPage">
         <div class="login-box">
-            <!-- Fixed Logo with Proper Dimensions -->
-            <img src="logo (2).png" alt="CIITM Logo" class="clickable-logo" style="max-width: 160px; width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" onclick="location.reload()"> 
+            <img src="logo (2).png" alt="CIITM Logo" class="clickable-logo login-logo" onclick="location.reload()">
             <h2>CIITM Admin Login</h2>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="login()">Login</button>
+            
+            <!-- Enclosed in <form> to fix DOM Password Field Warning -->
+            <form onsubmit="event.preventDefault(); login();" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                <input type="text" id="username" placeholder="Username" style="width: 100%;">
+                <input type="password" id="password" placeholder="Password" style="width: 100%;">
+                <button type="submit" style="width: 100%;">Login</button>
+            </form>
+            
             <p id="loginError"></p>
         </div>
     </div>
@@ -48,7 +106,7 @@
         <!-- SIDEBAR -->
         <div class="sidebar" id="sidebar">
             <div class="college-brand">
-                <img src="logo.png" class="college-logo clickable-logo" alt="CIITM Logo" onclick="showSection('dashboard')">
+                <img src="logo (2).png" class="college-logo clickable-logo" alt="CIITM Logo" onclick="showSection('dashboard')">
                 <h3>CIITM</h3>
                 <p class="college-sub">Attendance System</p>
             </div>
@@ -69,7 +127,7 @@
             <div id="dashboard" class="section">
                 <div class="college-header">
                     <img src="logo (2).png" class="header-logo clickable-logo" alt="CIITM Logo" onclick="showSection('dashboard')">
-                    <div class="header-details">
+                    <div>
                         <h1>Chhotanagpur Institute of Information Technology and Management</h1>
                         <p>Hari Mandir Road, Hirapur, Dhanbad - 826001</p>
                         <p>Director: Mr. Pramod Kumar Jha</p>
